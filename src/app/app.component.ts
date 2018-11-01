@@ -60,4 +60,23 @@ export class AppComponent {
     return n;
   }
 
+
+  // Monadic bind (chain) for lists
+  chain(xs, f) {
+    return [].concat.apply([], xs.map(f));
+  }
+
+  // [m..n]
+  range(m, n) {
+    return Array.apply(null, Array(n - m + 1)).map(function (x, i) {
+      return m + i;
+    });
+  }
+
+  factors(n) {
+    return this.chain(this.range(1, n), function (x) {       // monadic chain/bind
+      return n % x ? [] : [x];                                // monadic fail or inject/return
+    });
+  }
+
 }
